@@ -12,8 +12,8 @@ info:
 host: "api.mksmart.org"
 basePath: "/basil/sciroc-monitor/"
 tags:
-- name: "SciRoc"
-  description: "Everything about the SciRoc competition"
+- name: "Monitor"
+  description: "Everything about the SciRoc Monitor"
   externalDocs:
     description: "Find out more"
     url: "http://datahub.mksmart.org"
@@ -24,7 +24,7 @@ paths:
   /sciroc-episode/list:
     get:
       tags:
-      - "SciRoc"
+      - "Monitor"
       summary: "Gets the list of episodes"
       produces:
         - "application/xml"
@@ -41,7 +41,7 @@ paths:
   /sciroc-episode:
     post:
       tags:
-      - "SciRoc"
+      - "Monitor"
       summary: "Creates or updates an episode"
       operationId: "createUpdateEpisode"
       consumes:
@@ -53,7 +53,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Episode object that needs to be added/updated to the store"
+        description: "Episode object that needs to be added/updated"
         required: true
         schema:
           $ref: "#/definitions/Episode"
@@ -63,12 +63,14 @@ paths:
         201:
           description: "Episode created"
         200:
-          description: "Episode updated"          
+          description: "Episode updated"
+          schema:
+            $ref: "#/definitions/Episode"
         500:
           description: "Internal error"
     delete:
       tags:
-      - "SciRoc"
+      - "Monitor"
       summary: "Delete an episode"
       operationId: "deleteEpisode"
       parameters:
@@ -84,30 +86,414 @@ paths:
           description: "Episode deleted"          
         500:
           description: "Internal error"
-  /sciroc-teams:
+  /sciroc-team/list:
     get:
       tags:
-      - "SciRoc"
+      - "Monitor"
       summary: "Gets the list of teams"
       produces:
         - "application/xml"
         - "application/json"
       responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Team"
         500:
           description: "Internal error"
-  /sciroc-schedule:
-    get:
+  /sciroc-team:
+    post:
       tags:
-      - "SciRoc"
-      summary: "Gets the schedule"
+      - "Monitor"
+      summary: "Creates or updates a team"
+      operationId: "createUpdateTeam"
+      consumes:
+      - "application/json"
+      - "application/xml"
       produces:
         - "application/xml"
         - "application/json"
-      
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Team object that needs to be added/updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Team"
       responses:
+        405:
+          description: "Invalid input"
+        201:
+          description: "Episode created"
+        200:
+          description: "Episode updated"
+          schema:
+            $ref: "#/definitions/Team"
         500:
           description: "Internal error"
-  
+    delete:
+      tags:
+      - "Monitor"
+      summary: "Delete a team"
+      operationId: "deleteTeam"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Team ID to be deleted"
+        required: true
+        type: "string"
+      responses:
+        405:
+          description: "Invalid input: team does not exists"
+        204:
+          description: "Team deleted"          
+        500:
+          description: "Internal error"
+          
+  /sciroc-schedule/list:
+    get:
+      tags:
+      - "Monitor"
+      summary: "Gets the schedule (list of events)"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        500:
+          description: "Internal error"
+  /sciroc-schedule:
+    post:
+      tags:
+      - "Monitor"
+      summary: "Creates or updates an event in the schedule"
+      operationId: "createUpdateEvent"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Event object that needs to be added/updated in the schedule"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        405:
+          description: "Invalid input"
+        201:
+          description: "Event created"
+        200:
+          description: "Event updated"
+          schema:
+            $ref: "#/definitions/Event"
+        500:
+          description: "Internal error"
+    delete:
+      tags:
+      - "Monitor"
+      summary: "Delete an event in the schedule"
+      operationId: "deleteEvent"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Event ID to be deleted"
+        required: true
+        type: "string"
+      responses:
+        405:
+          description: "Invalid input: event does not exists"
+        204:
+          description: "Event deleted"          
+        500:
+          description: "Internal error"
+
+  /sciroc-trials/list:
+    get:
+      tags:
+      - "Monitor"
+      summary: "List of trials, optionally filtered by episode or team"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: 
+      - in: "query"
+        name: "episode"
+        description: "Id of the episode"
+        required: false
+        type: "string"
+      - in: "query"
+        name: "team"
+        description: "Id of the team"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Trial"
+        405:
+          description: "Invalid input: episode/team does not exists"
+        500:
+          description: "Internal error"
+  /sciroc-trial:
+    post:
+      tags:
+      - "Monitor"
+      summary: "Creates or updates a trial info"
+      operationId: "createUpdateTrial"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Trial object that needs to be added/updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Trial"
+      responses:
+        405:
+          description: "Invalid input"
+        201:
+          description: "Trial info created"
+        200:
+          description: "Trial info updated"
+          schema:
+            $ref: "#/definitions/Trial"
+        500:
+          description: "Internal error"
+    delete:
+      tags:
+      - "Monitor"
+      summary: "Delete trial info"
+      operationId: "deleteTrial"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Trial info ID to be deleted"
+        required: true
+        type: "string"
+      responses:
+        405:
+          description: "Invalid input: trial info does not exists"
+        204:
+          description: "Trial deleted"          
+        500:
+          description: "Internal error"
+  /sciroc-judgement/list:
+    get:
+      tags:
+      - "Monitor"
+      summary: "List of judgements, optionally filtered by episode or team"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: 
+      - in: "query"
+        name: "episode"
+        description: "Id of the episode"
+        required: false
+        type: "string"
+      - in: "query"
+        name: "team"
+        description: "Id of the team"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Judgement"
+        405:
+          description: "Invalid input: episode/team does not exists"
+        500:
+          description: "Internal error"
+  /sciroc-judgement:
+    post:
+      tags:
+      - "Monitor"
+      summary: "Creates or updates a judgement"
+      operationId: "createUpdateJudgement"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Judgement object that needs to be added/updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Judgement"
+      responses:
+        405:
+          description: "Invalid input"
+        201:
+          description: "Judgement created"
+        200:
+          description: "Judgement updated"
+          schema:
+            $ref: "#/definitions/Judgement"
+        500:
+          description: "Internal error"
+    delete:
+      tags:
+      - "Monitor"
+      summary: "Delete Judgement"
+      operationId: "deleteJudgement"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Judgement ID to be deleted"
+        required: true
+        type: "string"
+      responses:
+        405:
+          description: "Invalid input: Judgement ID does not exists"
+        204:
+          description: "Judgement deleted"          
+        500:
+          description: "Internal error"
+  /sciroc-robot-status/list:
+    get:
+      tags:
+      - "Monitor"
+      summary: "List of robots status, optionally filtered by episode or team"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: 
+      - in: "query"
+        name: "episode"
+        description: "Id of the episode"
+        required: false
+        type: "string"
+      - in: "query"
+        name: "team"
+        description: "Id of the team"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RobotStatus"
+        405:
+          description: "Invalid input: episode/team does not exists"
+        500:
+          description: "Internal error"
+  /sciroc-robot-status:
+    post:
+      tags:
+      - "Monitor"
+      summary: "Adds a status info"
+      operationId: "addStatus"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Status object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/RobotStatus"
+      responses:
+        405:
+          description: "Invalid input"
+        201:
+          description: "Status created"
+        200:
+          description: "Status updated"
+          schema:
+            $ref: "#/definitions/RobotStatus"
+        500:
+          description: "Internal error"
+  /sciroc-robot-location/list:
+    get:
+      tags:
+      - "Monitor"
+      summary: "Last reported robot locations"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters: 
+      - in: "query"
+        name: "episode"
+        description: "Id of the episode"
+        required: false
+        type: "string"
+      - in: "query"
+        name: "team"
+        description: "Id of the team"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RobotLocation"
+        405:
+          description: "Invalid input: episode/team does not exists"
+        500:
+          description: "Internal error"
+  /sciroc-robot-location:
+    post:
+      tags:
+      - "Monitor"
+      summary: "Set robot location"
+      operationId: "setRobotLocation"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Robot Location object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/RobotLocation"
+      responses:
+        405:
+          description: "Invalid input"
+        201:
+          description: "Robot Location created"
+        200:
+          description: "Robot Location updated"
+          schema:
+            $ref: "#/definitions/RobotLocation"
+        500:
+          description: "Internal error"
 
 securityDefinitions:
   petstore_auth:
@@ -124,6 +510,7 @@ securityDefinitions:
 definitions:
   Team:
     type: "object"
+    required: ["id", "label"]
     properties:
       id:
         type: "string"
@@ -133,6 +520,7 @@ definitions:
         type: "string"
   Episode:
     type: "object"
+    required: ["id", "label", "status", "map"]
     properties:
       id:
         type: "string"
@@ -140,12 +528,36 @@ definitions:
         type: "string"
       description:
         type: "string"
+      map:
+        type: "string"
+        pattern: "^[01]+$"
       status:
         type: "string"
         default: "inactive"
         enum:
           - "inactive"
           - "active"
+  Event:
+    type: "object"
+    required: ["id", "label", "start-time", "end-time"]
+    properties:
+      id:
+        type: "string"
+      label:
+        type: "string"
+      description:
+        type: "string"
+      location:
+        type: "string"
+        enum: ["location1", "location2", "location3", "location4", "location5"]
+      start-time: 
+        type: "string"
+        format: "date-time"
+      end-time:
+        type: "string"
+        format: "date-time"
+      episode:
+        type: "string"
   Trial:
     type: "object"
     properties:
@@ -166,33 +578,39 @@ definitions:
         type: "string"
       episode:
         type: "string"
-      trials:
-        type: "integer"
       score:
         type: "number"
-  Schedule:
-    type: "array"
-    items:
-          $ref: "#/definitions/ScheduleItem"
-  ScheduleItem:
+  RobotStatus:
     type: "object"
+    required: ["message", "location"]
     properties:
-      id:
-        type: "string"
-      label:
-        type: "string"
-      description:
-        type: "string"
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
       message:
         type: "string"
+        maxLength: 30
+      location:
+        $ref: "#/definitions/RobotLocation"
+  RobotLocation:
+    type: "object"
+    required: ["team", "episode", "timestamp", "location", "reference"]
+    properties:
+      episode:
+        type: "string"
+      team:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "date-time"
+      x:
+        type: "number"
+      y:
+        type: "number"
+      z:
+        type: "number"
+      reference:
+        type: "string"
+        enum: 
+        - "map"
+      
 externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+  description: "Find out more about the SciRoc competition"
+  url: "http://sciroc.org/datahub"
