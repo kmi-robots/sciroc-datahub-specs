@@ -1,1218 +1,1853 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
-  description: "DataHub SciRoc Competition Interface"
-  version: "1.0.0"
-  title: "DataHub SciRoc Competition Interface"
-  termsOfService: "http://datahub.mksmart.org"
+  description: DataHub SciRoc Competition Interface
+  version: 0.1.0
+  title: DataHub SciRoc Competition Interface
+  termsOfService: http://datahub.mksmart.org
   contact:
-    email: "datahub-support@mksmart.org"
+    email: datahub-support@mksmart.org
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "api.mksmart.org"
-basePath: "/sciroc-competition/"
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 tags:
-- name: "Monitor"
-  description: "Everything about the SciRoc Monitor"
-  externalDocs:
-    description: "Find out more"
-    url: "http://datahub.mksmart.org"
-- name: "Episode3"
-  description: "Episode 3: Coffee shop delivery"
-  externalDocs:
-    description: "Find out more"
-    url: "http://datahub.mksmart.org"
-schemes:
-- "https"
-- "http"
+  - name: Monitor
+    description: Everything about the SciRoc Monitor
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
+  - name: Episode3
+    description: "Episode 3: Coffee shop delivery"
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
+  - name: Episode4
+    description: "Episode 4: Take the elevator"
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
+  - name: Episode7
+    description: "Episode 7: Goodies box collector"
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
+  - name: Episode10
+    description: "Episode 10: Open the door"
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
+  - name: Episode12
+    description: "Episode 12: Fast delivery of emergency pills"
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
 paths:
   /sciroc-episode/list:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets the list of episodes"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets the list of episodes
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Episode"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Episode"
+        "500":
+          description: Internal error
   /sciroc-episode:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets the a episode"
-      produces:
-        - "application/xml"
-        - "application/json"
-      operationId: "getEpisode"
+        - Monitor
+      summary: Gets the a episode
+      operationId: getEpisode
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Episode ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Episode ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/Episode"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Episode"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Creates or updates an episode"
-      operationId: "createUpdateEpisode"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Episode object that needs to be added/updated"
+        - Monitor
+      summary: Creates or updates an episode
+      operationId: createUpdateEpisode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Episode"
+        description: Episode object that needs to be added/updated
         required: true
-        schema:
-          $ref: "#/definitions/Episode"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Episode created"
-        200:
-          description: "Episode updated"
-          schema:
-            $ref: "#/definitions/Episode"
-        500:
-          description: "Internal error"
+        "200":
+          description: Episode updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Episode"
+        "201":
+          description: Episode created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete an episode"
-      operationId: "deleteEpisode"
+        - Monitor
+      summary: Delete an episode
+      operationId: deleteEpisode
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Episode ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Episode ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Episode deleted
+        "405":
           description: "Invalid input: episode does not exists"
-        204:
-          description: "Episode deleted"          
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-team/list:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets the list of teams"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets the list of teams
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Team"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Team"
+        "500":
+          description: Internal error
   /sciroc-team:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets a team"
-      operationId: "getTeam"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets a team
+      operationId: getTeam
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Team ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Team ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/Team"
-        500:
-          description: "Internal error"  
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Creates or updates a team"
-      operationId: "createUpdateTeam"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Team object that needs to be added/updated"
+        - Monitor
+      summary: Creates or updates a team
+      operationId: createUpdateTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Team"
+        description: Team object that needs to be added/updated
         required: true
-        schema:
-          $ref: "#/definitions/Team"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Episode created"
-        200:
-          description: "Episode updated"
-          schema:
-            $ref: "#/definitions/Team"
-        500:
-          description: "Internal error"
+        "200":
+          description: Episode updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "201":
+          description: Episode created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete a team"
-      operationId: "deleteTeam"
+        - Monitor
+      summary: Delete a team
+      operationId: deleteTeam
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Team ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Team ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Team deleted
+        "405":
           description: "Invalid input: team does not exists"
-        204:
-          description: "Team deleted"          
-        500:
-          description: "Internal error"
-          
+        "500":
+          description: Internal error
   /sciroc-event/list:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets the schedule (list of events)"
+        - Monitor
+      summary: Gets the schedule (list of events)
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      produces:
-        - "application/xml"
-        - "application/json"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Event"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+        "500":
+          description: Internal error
   /sciroc-event:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets an event"
-      operationId: "getEvent"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets an event
+      operationId: getEvent
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Event ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Event ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/Event"
-        500:
-          description: "Internal error"  
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Creates or updates an event in the schedule"
-      operationId: "createUpdateEvent"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Event object that needs to be added/updated in the schedule"
+        - Monitor
+      summary: Creates or updates an event in the schedule
+      operationId: createUpdateEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Event"
+        description: Event object that needs to be added/updated in the schedule
         required: true
-        schema:
-          $ref: "#/definitions/Event"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Event created"
-        200:
-          description: "Event updated"
-          schema:
-            $ref: "#/definitions/Event"
-        500:
-          description: "Internal error"
+        "200":
+          description: Event updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "201":
+          description: Event created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete an event in the schedule"
-      operationId: "deleteEvent"
+        - Monitor
+      summary: Delete an event in the schedule
+      operationId: deleteEvent
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Event ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Event ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Event deleted
+        "405":
           description: "Invalid input: event does not exists"
-        204:
-          description: "Event deleted"          
-        500:
-          description: "Internal error"
-
+        "500":
+          description: Internal error
   /sciroc-trials/list:
     get:
       tags:
-      - "Monitor"
-      summary: "List of trials, optionally filtered by episode or team"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: List of trials, optionally filtered by episode or team
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Trial"
-        405:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Trial"
+        "405":
           description: "Invalid input: episode/team does not exists"
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-trial:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets a trial"
-      operationId: "getTrial"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets a trial
+      operationId: getTrial
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Trial ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Trial ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/Trial"
-        500:
-          description: "Internal error"  
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trial"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Creates or updates a trial info"
-      operationId: "createUpdateTrial"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Trial object that needs to be added/updated"
+        - Monitor
+      summary: Creates or updates a trial info
+      operationId: createUpdateTrial
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Trial"
+        description: Trial object that needs to be added/updated
         required: true
-        schema:
-          $ref: "#/definitions/Trial"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Trial info created"
-        200:
-          description: "Trial info updated"
-          schema:
-            $ref: "#/definitions/Trial"
-        500:
-          description: "Internal error"
+        "200":
+          description: Trial info updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trial"
+        "201":
+          description: Trial info created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete trial info"
-      operationId: "deleteTrial"
+        - Monitor
+      summary: Delete trial info
+      operationId: deleteTrial
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Trial info ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Trial info ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Trial deleted
+        "405":
           description: "Invalid input: trial info does not exists"
-        204:
-          description: "Trial deleted"          
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-judgement/list:
     get:
       tags:
-      - "Monitor"
-      summary: "List of judgements, optionally filtered by episode or team"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: List of judgements, optionally filtered by episode or team
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Judgement"
-        405:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Judgement"
+        "405":
           description: "Invalid input: episode/team does not exists"
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-judgement:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets a judgement"
-      operationId: "getJudgement"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets a judgement
+      operationId: getJudgement
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Judgement ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Judgement ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/Judgement"
-        500:
-          description: "Internal error"  
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Judgement"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Creates or updates a judgement"
-      operationId: "createUpdateJudgement"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Judgement object that needs to be added/updated"
+        - Monitor
+      summary: Creates or updates a judgement
+      operationId: createUpdateJudgement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Judgement"
+        description: Judgement object that needs to be added/updated
         required: true
-        schema:
-          $ref: "#/definitions/Judgement"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Judgement created"
-        200:
-          description: "Judgement updated"
-          schema:
-            $ref: "#/definitions/Judgement"
-        500:
-          description: "Internal error"
+        "200":
+          description: Judgement updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Judgement"
+        "201":
+          description: Judgement created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete Judgement"
-      operationId: "deleteJudgement"
+        - Monitor
+      summary: Delete Judgement
+      operationId: deleteJudgement
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Judgement ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Judgement ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Judgement deleted
+        "405":
           description: "Invalid input: Judgement ID does not exists"
-        204:
-          description: "Judgement deleted"          
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-robot-status/list:
     get:
       tags:
-      - "Monitor"
-      summary: "List of robots status, optionally filtered by episode or team"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: List of robots status, optionally filtered by episode or team
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/RobotStatus"
-        405:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RobotStatus"
+        "405":
           description: "Invalid input: episode/team does not exists"
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-robot-status:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets a robot status"
-      operationId: "getRobotStatus"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets a robot status
+      operationId: getRobotStatus
       parameters:
-      - name: "id"
-        in: "query"
-        description: "RobotStatus ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: RobotStatus ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/RobotStatus"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RobotStatus"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Adds a status info"
-      operationId: "addStatus"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Status object that needs to be added"
+        - Monitor
+        - Episode3
+        - Episode4
+        - Episode7
+        - Episode10
+        - Episode12
+      summary: Adds a status info
+      operationId: addStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotStatus"
+        description: Status object that needs to be added
         required: true
-        schema:
-          $ref: "#/definitions/RobotStatus"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Status created"
-        200:
-          description: "Status updated"
-          schema:
-            $ref: "#/definitions/RobotStatus"
-        500:
-          description: "Internal error"
+        "200":
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RobotStatus"
+        "201":
+          description: Status created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete status info"
-      operationId: "deleteRobotStatus"
+        - Monitor
+      summary: Delete status info
+      operationId: deleteRobotStatus
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Robot status ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Robot status ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Robot status deleted
+        "405":
           description: "Invalid input: Robot status ID does not exists"
-        204:
-          description: "Robot status deleted"          
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-robot-location/list:
     get:
       tags:
-      - "Monitor"
-      summary: "Last reported robot locations"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Last reported robot locations
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/RobotLocation"
-        405:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RobotLocation"
+        "405":
           description: "Invalid input: episode/team does not exists"
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-robot-location:
     get:
       tags:
-      - "Monitor"
-      summary: "Gets a robot location"
-      operationId: "getRobotLocation"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Monitor
+      summary: Gets a robot location
+      operationId: getRobotLocation
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Robot location ID to be retrieved"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Robot location ID to be retrieved
+          required: true
           schema:
-            $ref: "#/definitions/RobotLocation"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RobotLocation"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Monitor"
-      summary: "Set robot location"
-      operationId: "setRobotLocation"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Robot Location object that needs to be added"
+        - Monitor
+        - Episode3
+        - Episode4
+        - Episode7
+        - Episode10
+        - Episode12
+      summary: Set robot location
+      operationId: setRobotLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotLocation"
+        description: Robot Location object that needs to be added
         required: true
-        schema:
-          $ref: "#/definitions/RobotLocation"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Robot Location created"
-        200:
-          description: "Robot Location updated"
-          schema:
-            $ref: "#/definitions/RobotLocation"
-        500:
-          description: "Internal error"
+        "200":
+          description: Robot Location updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RobotLocation"
+        "201":
+          description: Robot Location created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Monitor"
-      summary: "Delete robot location"
-      operationId: "deleteRobotLocation"
+        - Monitor
+      summary: Delete robot location
+      operationId: deleteRobotLocation
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Robot location ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Robot location ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Robot location deleted
+        "405":
           description: "Invalid input: Robot location ID does not exists"
-        204:
-          description: "Robot location deleted"          
-        500:
-          description: "Internal error"
-
+        "500":
+          description: Internal error
   /sciroc-episode3-menu/list:
     get:
       tags:
-      - "Episode3"
-      summary: "Coffee Shop Menu"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Episode3
+      summary: Coffee Shop Menu
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Menu"
-        405:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Menu"
+        "405":
           description: "Invalid input: menu does not exists"
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-episode3-menu:
     get:
       tags:
-      - "Episode3"
-      summary: "Gets a menu"
-      operationId: "getMenu"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Episode3
+      summary: Gets a menu
+      operationId: getMenu
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Menu ID"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Menu ID
+          required: true
           schema:
-            $ref: "#/definitions/Menu"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Menu"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Episode3"
-      summary: "Set menu"
-      operationId: "setMenu"
-      consumes:
-      - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Robot Location object that needs to be added"
+        - Episode3
+      summary: Set menu
+      operationId: setMenu
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Menu"
+        description: Robot Location object that needs to be added
         required: true
-        schema:
-          $ref: "#/definitions/Menu"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Menu created"
-        204:
-          description: "Menu updated"
-        500:
-          description: "Internal error"
+        "201":
+          description: Menu created
+        "204":
+          description: Menu updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Episode3"
-      summary: "Menu location"
-      operationId: "deleteMenu"
+        - Episode3
+      summary: Menu location
+      operationId: deleteMenu
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Menu ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Menu ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Menu deleted
+        "405":
           description: "Invalid input: Menu ID does not exists"
-        204:
-          description: "Menu deleted"          
-        500:
-          description: "Internal error"
-
-
+        "500":
+          description: Internal error
   /sciroc-episode3-table/list:
     get:
       tags:
-      - "Episode3"
-      summary: "Coffee Shop Table"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Episode3
+      summary: Coffee Shop Table
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Table"
-        405:
-          description: "Invalid input"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Table"
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
   /sciroc-episode3-table:
     get:
       tags:
-      - "Episode3"
-      summary: "Gets a table"
-      operationId: "getTable"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Episode3
+      summary: Gets a table
+      operationId: getTable
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Table ID"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Table ID
+          required: true
           schema:
-            $ref: "#/definitions/Table"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Table"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Episode3"
-      summary: "Set table"
-      operationId: "setTable"
-      consumes:
-      - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Table that needs to be added or updated"
+        - Episode3
+      summary: Set table
+      operationId: setTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Table"
+        description: Table that needs to be added or updated
         required: true
-        schema:
-          $ref: "#/definitions/Table"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Table created"
-        204:
-          description: "Table updated"
-        500:
-          description: "Internal error"
+        "201":
+          description: Table created
+        "204":
+          description: Table updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Episode3"
-      summary: "Table"
-      operationId: "deleteTable"
+        - Episode3
+      summary: Table
+      operationId: deleteTable
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Table ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Table ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Table deleted
+        "405":
           description: "Invalid input: Table ID does not exists"
-        204:
-          description: "Table deleted"          
-        500:
-          description: "Internal error"
-
-
+        "500":
+          description: Internal error
   /sciroc-episode3-order/list:
     get:
       tags:
-      - "Episode3"
-      summary: "Coffee Shop Order"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Episode3
+      summary: Coffee Shop Order
       parameters:
-        - name: "query"
-          in: "query"
-          description: "Query"
+        - name: query
+          in: query
+          description: Query
           required: false
-          type: "string"
-      responses:
-        200:
-          description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Order"
-        405:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "405":
           description: "Invalid input: order does not exists"
-        500:
-          description: "Internal error"
+        "500":
+          description: Internal error
   /sciroc-episode3-order:
     get:
       tags:
-      - "Episode3"
-      summary: "Gets a order"
-      operationId: "getOrder"
-      produces:
-        - "application/xml"
-        - "application/json"
+        - Episode3
+      summary: Gets a order
+      operationId: getOrder
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Order ID"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
+        - name: id
+          in: query
+          description: Order ID
+          required: true
           schema:
-            $ref: "#/definitions/Order"
-        500:
-          description: "Internal error"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "500":
+          description: Internal error
     post:
       tags:
-      - "Episode3"
-      summary: "Set order"
-      operationId: "setOrder"
-      consumes:
-      - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Order that needs to be added"
+        - Episode3
+      summary: Set order
+      operationId: setOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+        description: Order that needs to be added
         required: true
-        schema:
-          $ref: "#/definitions/Order"
       responses:
-        405:
-          description: "Invalid input"
-        201:
-          description: "Menu created"
-        204:
-          description: "Menu updated"
-        500:
-          description: "Internal error"
+        "201":
+          description: Menu created
+        "204":
+          description: Menu updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
     delete:
       tags:
-      - "Episode3"
-      summary: "Order"
-      operationId: "deleteOrder"
+        - Episode3
+      summary: Order
+      operationId: deleteOrder
       parameters:
-      - name: "id"
-        in: "query"
-        description: "Order ID to be deleted"
-        required: true
-        type: "string"
+        - name: id
+          in: query
+          description: Order ID to be deleted
+          required: true
+          schema:
+            type: string
       responses:
-        405:
+        "204":
+          description: Order deleted
+        "405":
           description: "Invalid input: Order ID does not exists"
-        204:
-          description: "Order deleted"          
-        500:
-          description: "Internal error"          
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
-definitions:
-  Team:
-    type: "object"
-    required: ["@id", "@type", "label"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Team"
-      label:
-        type: "string"
-      description:
-        type: "string"
-  Episode:
-    type: "object"
-    required: ["@id", "@type", "label", "status", "map"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Episode"
-      label:
-        type: "string"
-      description:
-        type: "string"
-      map:
-        type: "string"
-        pattern: "^[01]+$"
-      status:
-        type: "string"
-        default: "inactive"
-        enum:
-          - "inactive"
-          - "active"
-  Event:
-    type: "object"
-    required: ["@id", "@type", "label", "start-time", "end-time"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Event"
-      label:
-        type: "string"
-      description:
-        type: "string"
-      location:
-        type: "string"
-        enum: ["location1", "location2", "location3", "location4", "location5"]
-      start-time: 
-        type: "string"
-        format: "date-time"
-      end-time:
-        type: "string"
-        format: "date-time"
-      episode:
-        type: "string"
-  Trial:
-    type: "object"
-    required: ["@id","@type","team","episode","start-time","end-time","score"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Trial"
-      team:
-        type: "string"
-      episode:
-        type: "string"
-      start-time:
-        type: "string"
-      end-time:
-        type: "string"
-      score:
-        type: "number"
-  Judgement:
-    type: "object"
-    required: ["@id","@type","team","episode","score"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Judgement"
-      team:
-        type: "string"
-      episode:
-        type: "string"
-      score:
-        type: "number"
-  RobotStatus:
-    type: "object"
-    required: ["@id","@type","message", "team", "episode", "timestamp", "location", "reference"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "RobotStatus"
-      message:
-        type: "string"
-        maxLength: 30
-      episode:
-        type: "string"
-      team:
-        type: "string"
-      timestamp:
-        type: "string"
-        format: "date-time"
-      x:
-        type: "number"
-      y:
-        type: "number"
-      z:
-        type: "number"
-      reference:
-        type: "string"
-        enum: 
-        - "map"
-  RobotLocation:
-    type: "object"
-    required: ["@id","@type","team", "episode", "timestamp", "location", "reference"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "RobotLocation"
-      episode:
-        type: "string"
-      team:
-        type: "string"
-      timestamp:
-        type: "string"
-        format: "date-time"
-      x:
-        type: "number"
-      y:
-        type: "number"
-      z:
-        type: "number"
-      reference:
-        type: "string"
-        enum: 
-        - "map"
-  Menu:
-    type: "object"
-    required: ["@id","@type"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Menu"
-      products:
-        type: "array"
-        minItems: 2
-        items:
-          $ref: "#/definitions/Product"
-  Table:
-    type: "object"
-    required: ["@id", "@type", "customers", "status"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Table"
-      customers:
-        type: "number"
-      status:
-        type: "string"
-        enum:
-        - "Needs serving"
-        - "Already served"
-        - "Needs cleaning"
-        - "Ready"
-  Product:
-    type: "object"
-    required: ["@id","@type","label","variants"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Product"
-      label:
-        type: "string"
-      descriptions:
-        type: "string"
-      variants:
-        type: "array"
-        minItems: 1
-        items:
-          $ref: "#/definitions/ProductVariant"
-  ProductVariant:
-    type: "object"
-    required: ["@id","@type","label","price"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "ProductVariant"
-      label:
-        type: "string"
-      price:
-        type: "string"
-  Order:
-    type: "object"
-    required: ["@id","@type","table", "products", "status"]
-    properties:
-      "@id":
-        type: "string"
-      "@type":
-        type: "string"
-        enum: 
-        - "Order"
-      table:
-        type: "string"
-      products:
-        type: "array"
-        minItems: 1
-        items:
-          $ref: "#/definitions/Product"
-      status:
-        type: "string"
-        enum:
-        - "Pending"
-        - "Complete"
-    
+        "500":
+          description: Internal error
+  /sciroc-episode4-shop/list:
+    get:
+      tags:
+        - Episode4
+      summary: Shop info list
+      parameters:
+        - name: query
+          in: query
+          description: Query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Shop"
+        "405":
+          description: "Invalid input: order does not exists"
+        "500":
+          description: Internal error
+  /sciroc-episode4-shop:
+    get:
+      tags:
+        - Episode4
+      summary: Gets a shop info
+      operationId: getShop
+      parameters:
+        - name: id
+          in: query
+          description: Shop ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Shop"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode4
+      summary: Set shop
+      operationId: setShop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Shop"
+        description: Shop info that needs to be added
+        required: true
+      responses:
+        "201":
+          description: Shop created
+        "204":
+          description: Shop updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
+    delete:
+      tags:
+        - Episode4
+      summary: Delete Shop info
+      operationId: deleteShop
+      parameters:
+        - name: id
+          in: query
+          description: Shop ID to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Shop deleted
+        "405":
+          description: "Invalid input: Shop ID does not exists"
+        "500":
+          description: Internal error
+  /sciroc-episode7-inventory-item/list:
+    get:
+      tags:
+        - Episode7
+      summary: List of inventory items
+      parameters:
+        - name: query
+          in: query
+          description: Query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InventoryItem"
+        "405":
+          description: "Invalid input: inventory item does not exists"
+        "500":
+          description: Internal error
+  /sciroc-episode7-inventory-item:
+    get:
+      tags:
+        - Episode7
+      summary: Gets a shop info
+      operationId: getInventoryItem
+      parameters:
+        - name: id
+          in: query
+          description: InventoryItem ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode7
+      summary: Set shop
+      operationId: setInventoryItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryItem"
+        description: InventoryItem that needs to be added or updated
+        required: true
+      responses:
+        "201":
+          description: InventoryItem created
+        "204":
+          description: InventoryItem updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
+    delete:
+      tags:
+        - Episode7
+      summary: Delete InventoryItem
+      operationId: deleteInventoryItem
+      parameters:
+        - name: id
+          in: query
+          description: InventoryItem ID to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: InventoryItem deleted
+        "405":
+          description: "Invalid input: InventoryItem ID does not exists"
+        "500":
+          description: Internal error
+  /sciroc-episode7-inventory-order/list:
+    get:
+      tags:
+        - Episode7
+      summary: List of inventory orders
+      parameters:
+        - name: query
+          in: query
+          description: Query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InventoryOrder"
+        "405":
+          description: "Invalid query"
+        "500":
+          description: Internal error
+  /sciroc-episode7-inventory-order:
+    get:
+      tags:
+        - Episode7
+      summary: Gets order info
+      operationId: getInventoryOrder
+      parameters:
+        - name: id
+          in: query
+          description: InventoryOrder ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryOrder"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode7
+      summary: Set inventory order
+      operationId: setInventoryOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryOrder"
+        description: InventoryOrder that needs to be added or updated
+        required: true
+      responses:
+        "201":
+          description: InventoryOrder created
+        "204":
+          description: InventoryOrder updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
+    delete:
+      tags:
+        - Episode7
+      summary: Delete InventoryOrder
+      operationId: deleteInventoryOrder
+      parameters:
+        - name: id
+          in: query
+          description: InventoryOrder ID to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: InventoryOrder deleted
+        "405":
+          description: "Invalid input: InventoryOrder ID does not exists"
+        "500":
+          description: Internal error
+  /sciroc-episode12-patient/list:
+    get:
+      tags:
+        - Episode12
+      summary: List of patients
+      parameters:
+        - name: query
+          in: query
+          description: Query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Patient"
+        "405":
+          description: "Invalid query"
+        "500":
+          description: Internal error
+  /sciroc-episode12-patient:
+    get:
+      tags:
+        - Episode12
+      summary: Gets patient info
+      operationId: getPatient
+      parameters:
+        - name: id
+          in: query
+          description: Patient ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Patient"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode12
+      summary: Set inventory order
+      operationId: setPatient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Patient"
+        description: InventoryOrder that needs to be added or updated
+        required: true
+      responses:
+        "201":
+          description: Patient created
+        "204":
+          description: Patient updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
+    delete:
+      tags:
+        - Episode12
+      summary: Delete Patient
+      operationId: deletePatient
+      parameters:
+        - name: id
+          in: query
+          description: Patient ID to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Patient deleted
+        "405":
+          description: "Invalid input: Patient ID does not exists"
+        "500":
+          description: Internal error
+  /sciroc-episode12-image/list:
+    get:
+      tags:
+        - Episode12
+      summary: List of image reports
+      parameters:
+        - name: query
+          in: query
+          description: Query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImageReport"
+        "405":
+          description: "Invalid query"
+        "500":
+          description: Internal error
+  /sciroc-episode12-image:
+    get:
+      tags:
+        - Episode12
+      summary: Gets image
+      operationId: getImageReport
+      parameters:
+        - name: id
+          in: query
+          description: Patient ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageReport"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode12
+      summary: Add image report
+      operationId: setImageReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageReport"
+        description: ImageReport that needs to be added or updated
+        required: true
+      responses:
+        "201":
+          description: ImageReport created
+        "204":
+          description: ImageReport updated
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
+    delete:
+      tags:
+        - Episode12
+      summary: Delete ImageReport
+      operationId: deleteImageReport
+      parameters:
+        - name: id
+          in: query
+          description: ImageReport ID to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ImageReport deleted
+        "405":
+          description: "Invalid input: ImageReport ID does not exists"
+        "500":
+          description: Internal error
 externalDocs:
-  description: "Find out more about the SciRoc competition"
-  url: "http://sciroc.org/datahub"
+  description: Find out more about the SciRoc competition
+  url: http://sciroc.org/datahub
+servers:
+  - url: https://api.mksmart.org/sciroc-competition/
+  - url: http://api.mksmart.org/sciroc-competition/
+components:
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://petstore.swagger.io/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  schemas:
+    Team:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - label
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Team
+        label:
+          type: string
+        description:
+          type: string
+    Episode:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - label
+        - status
+        - map
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Episode
+        label:
+          type: string
+        description:
+          type: string
+        map:
+          type: string
+          pattern: ^[01]+$
+        status:
+          type: string
+          default: inactive
+          enum:
+            - inactive
+            - active
+    Event:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - label
+        - start-time
+        - end-time
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Event
+        label:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+          enum:
+            - location1
+            - location2
+            - location3
+            - location4
+            - location5
+        start-time:
+          type: string
+          format: date-time
+        end-time:
+          type: string
+          format: date-time
+        episode:
+          type: string
+    Trial:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - team
+        - episode
+        - start-time
+        - end-time
+        - score
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Trial
+        team:
+          type: string
+        episode:
+          type: string
+        start-time:
+          type: string
+        end-time:
+          type: string
+        score:
+          type: number
+    Judgement:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - team
+        - episode
+        - score
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Judgement
+        team:
+          type: string
+        episode:
+          type: string
+        score:
+          type: number
+    RobotStatus:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - message
+        - team
+        - episode
+        - timestamp
+        - x
+        - y
+        - z
+        - reference
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - RobotStatus
+        message:
+          type: string
+          maxLength: 30
+        episode:
+          type: string
+        team:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+        reference:
+          type: string
+          enum:
+            - map
+    RobotLocation:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - team
+        - episode
+        - timestamp
+        - location
+        - reference
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - RobotLocation
+        episode:
+          type: string
+        team:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+        reference:
+          type: string
+          enum:
+            - map
+    Menu:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Menu
+        products:
+          type: array
+          minItems: 2
+          items:
+            $ref: "#/components/schemas/Product"
+    Table:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - customers
+        - status
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Table
+        customers:
+          type: number
+        status:
+          type: string
+          enum:
+            - Needs serving
+            - Already served
+            - Needs cleaning
+            - Ready
+    Product:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - label
+        - variants
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Product
+        label:
+          type: string
+        descriptions:
+          type: string
+        variants:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/ProductVariant"
+    ProductVariant:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - label
+        - price
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - ProductVariant
+        label:
+          type: string
+        price:
+          type: string
+    Order:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - table
+        - products
+        - status
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - Order
+        table:
+          type: string
+        products:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/Product"
+        status:
+          type: string
+          enum:
+            - Pending
+            - Complete
+    Shop:
+      type: object
+      required:
+      - "@id"
+      - "@type"
+      - floor
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+          - Shop
+        floor:
+          type: number
+        description:
+          type: string
+    InventoryItem:
+      type: object
+      required:
+      - "@id"
+      - "@type"
+      - label
+      - description
+      - shelf
+      - slot
+      - quantity
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+          - InventoryItem
+        label:
+          type: string
+        description:
+          type: string
+        shelf:
+          type: string
+        slot:
+          type: string
+        quantity:
+          type: number
+    InventoryOrder:
+      type: object
+      required:
+      - "@id"
+      - "@type"
+      - items
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+          - InventoryOrder
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/InventoryItemOrder"
+    InventoryItemOrder:
+      type: object
+      required:
+      - inventory-item-id
+      - quantity
+      properties:
+        inventory-item-id:
+          type: string
+        quantity:
+          type: number
+    Patient:
+      type: object
+      required:
+      - "@id"
+      - "@type"
+      - x
+      - y
+      - z
+      - reference
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+          - Patient
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+        reference:
+          type: string
+          enum:
+            - map
+    ImageReport:
+      type: object
+      required:
+      - "@id"
+      - "@type"
+      - team
+      - timestamp
+      - x
+      - y
+      - z
+      - reference
+      - base64
+      - format
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+          - ImageReport
+        team:
+          type: string
+        timestamp:
+          type: number
+          description: "Unix timestamp"
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+        reference:
+          type: string
+          enum:
+            - map
+        base64:
+          type: string
+        format:
+          type: string
+          enum:
+          - image/jpeg
+          - image/png
+          - image/bmp
+      
