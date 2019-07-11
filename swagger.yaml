@@ -1,11 +1,10 @@
 openapi: 3.0.0
 info:
   description: DataHub SciRoc Competition Interface
-  version: 0.2.0
+  version: 0.1.0
   title: DataHub SciRoc Competition Interface
   termsOfService: http://datahub.mksmart.org
   contact:
-	name: Enrico Daga, Jason Carvalho
     email: datahub-support@mksmart.org
   license:
     name: Apache 2.0
@@ -2016,7 +2015,6 @@ components:
         - "@type"
         - label
         - status
-        - map
       properties:
         "@id":
           type: string
@@ -2028,9 +2026,6 @@ components:
           type: string
         description:
           type: string
-        map:
-          type: string
-          pattern: ^[01]+$
         status:
           type: string
           default: inactive
