@@ -41,7 +41,7 @@ tags:
       description: Find out more
       url: http://datahub.mksmart.org
 paths:
-  /sciroc-episode/list:
+  /sciroc-episode:
     get:
       tags:
         - Monitor
@@ -62,9 +62,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Episode"
+        "400":
+          description: Bad request
         "500":
           description: Internal error
-  /sciroc-episode:
+  /sciroc-episode/{id}:
     get:
       tags:
         - Monitor
@@ -72,7 +74,7 @@ paths:
       operationId: getEpisode
       parameters:
         - name: id
-          in: query
+          in: path
           description: Episode ID to be retrieved
           required: true
           schema:
@@ -84,31 +86,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Episode"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Monitor
-      summary: Creates or updates an episode
-      operationId: createUpdateEpisode
+      summary: Creates an episode
+      operationId: createEpisode
+      parameters:
+        - name: id
+          in: path
+          description: Episode ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Episode"
-        description: Episode object that needs to be added/updated
+        description: Episode object that needs to be added
         required: true
       responses:
-        "200":
-          description: Episode updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Episode"
         "201":
           description: Episode created
-        "405":
-          description: Invalid input
+        "204":
+          description: Episode replaced
+        "400":
+          description: Bad request
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Monitor
+      summary: Updates an episode
+      operationId: updateEpisode
+      parameters:
+        - name: id
+          in: path
+          description: Episode ID to be updated
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Episode"
+        description: Episode object that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Episode updated
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
     delete:
@@ -118,7 +155,7 @@ paths:
       operationId: deleteEpisode
       parameters:
         - name: id
-          in: query
+          in: path
           description: Episode ID to be deleted
           required: true
           schema:
@@ -126,11 +163,13 @@ paths:
       responses:
         "204":
           description: Episode deleted
-        "405":
-          description: "Invalid input: episode does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-team/list:
+  /sciroc-team:
     get:
       tags:
         - Monitor
@@ -151,9 +190,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Team"
+        "400": 
+          description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-team:
+  /sciroc-team/{id}:
     get:
       tags:
         - Monitor
@@ -161,7 +202,7 @@ paths:
       operationId: getTeam
       parameters:
         - name: id
-          in: query
+          in: path
           description: Team ID to be retrieved
           required: true
           schema:
@@ -173,30 +214,63 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Team"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Monitor
-      summary: Creates or updates a team
-      operationId: createUpdateTeam
+      summary: Creates a team
+      operationId: createTeam
+      parameters:
+        - name: id
+          in: path
+          description: Team ID to be created
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Team"
-        description: Team object that needs to be added/updated
+        description: Team object that needs to be added
         required: true
       responses:
-        "200":
-          description: Episode updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Team"
         "201":
-          description: Episode created
-        "405":
+          description: Team created
+        "204":
+          description: Team replaced
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal error          
+    post:
+      tags:
+        - Monitor
+      summary: Creates or updates a team
+      operationId: updateTeam
+      parameters:
+        - name: id
+          in: path
+          description: Team ID to be retrieved
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Team"
+        description: Team object that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Team updated
+        "400":
           description: Invalid input
         "500":
           description: Internal error
@@ -207,7 +281,7 @@ paths:
       operationId: deleteTeam
       parameters:
         - name: id
-          in: query
+          in: path
           description: Team ID to be deleted
           required: true
           schema:
@@ -215,11 +289,13 @@ paths:
       responses:
         "204":
           description: Team deleted
-        "405":
-          description: "Invalid input: team does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-event/list:
+  /sciroc-event:
     get:
       tags:
         - Monitor
@@ -240,9 +316,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Event"
+        "400": 
+          description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-event:
+  /sciroc-event/{id}:
     get:
       tags:
         - Monitor
@@ -250,8 +328,8 @@ paths:
       operationId: getEvent
       parameters:
         - name: id
-          in: query
-          description: Event ID to be retrieved
+          in: path
+          description: Event ID
           required: true
           schema:
             type: string
@@ -264,29 +342,62 @@ paths:
                 $ref: "#/components/schemas/Event"
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Monitor
-      summary: Creates or updates an event in the schedule
-      operationId: createUpdateEvent
+      summary: Creates an event in the schedule
+      operationId: createEvent
+      parameters:
+        - name: id
+          in: path
+          description: Event ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Event"
-        description: Event object that needs to be added/updated in the schedule
+        description: Event object that needs to be added to the schedule
         required: true
       responses:
-        "200":
-          description: Event updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Event"
         "201":
           description: Event created
-        "405":
-          description: Invalid input
+        "204":
+          description: Event replaced
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Monitor
+      summary: Updates an event in the schedule
+      operationId: updateEvent
+      parameters:
+        - name: id
+          in: path
+          description: Event ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Event"
+        description: Event object that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Event updated
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
     delete:
@@ -296,7 +407,7 @@ paths:
       operationId: deleteEvent
       parameters:
         - name: id
-          in: query
+          in: path
           description: Event ID to be deleted
           required: true
           schema:
@@ -304,15 +415,17 @@ paths:
       responses:
         "204":
           description: Event deleted
-        "405":
-          description: "Invalid input: event does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-trials/list:
+  /sciroc-trials:
     get:
       tags:
         - Monitor
-      summary: List of trials, optionally filtered by episode or team
+      summary: List of trials
       parameters:
         - name: query
           in: query
@@ -329,11 +442,13 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Trial"
-        "405":
-          description: "Invalid input: episode/team does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-trial:
+  /sciroc-trial/{id}:
     get:
       tags:
         - Monitor
@@ -341,8 +456,8 @@ paths:
       operationId: getTrial
       parameters:
         - name: id
-          in: query
-          description: Trial ID to be retrieved
+          in: path
+          description: Trial ID
           required: true
           schema:
             type: string
@@ -353,31 +468,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Trial"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Monitor
-      summary: Creates or updates a trial info
-      operationId: createUpdateTrial
+      summary: Creates or replaces a trial info
+      operationId: createTrial
+      parameters:
+        - name: id
+          in: path
+          description: Trial ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Trial"
-        description: Trial object that needs to be added/updated
+        description: Trial object that needs to be added
         required: true
       responses:
-        "200":
-          description: Trial info updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Trial"
         "201":
           description: Trial info created
-        "405":
-          description: Invalid input
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Monitor
+      summary: Updates a trial info
+      operationId: updateTrial
+      parameters:
+        - name: id
+          in: path
+          description: Trial ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Trial"
+        description: Trial object that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Trial info updated
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
     delete:
@@ -387,7 +537,7 @@ paths:
       operationId: deleteTrial
       parameters:
         - name: id
-          in: query
+          in: path
           description: Trial info ID to be deleted
           required: true
           schema:
@@ -395,11 +545,13 @@ paths:
       responses:
         "204":
           description: Trial deleted
-        "405":
-          description: "Invalid input: trial info does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-judgement/list:
+  /sciroc-judgement:
     get:
       tags:
         - Monitor
@@ -420,11 +572,13 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Judgement"
-        "405":
-          description: "Invalid input: episode/team does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-judgement:
+  /sciroc-judgement/{id}:
     get:
       tags:
         - Monitor
@@ -432,8 +586,8 @@ paths:
       operationId: getJudgement
       parameters:
         - name: id
-          in: query
-          description: Judgement ID to be retrieved
+          in: path
+          description: Judgement ID
           required: true
           schema:
             type: string
@@ -444,33 +598,68 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Judgement"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Monitor
       summary: Creates or updates a judgement
-      operationId: createUpdateJudgement
+      operationId: createJudgement
+      parameters:
+        - name: id
+          in: path
+          description: Judgement ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Judgement"
-        description: Judgement object that needs to be added/updated
+        description: Judgement object that needs to be added/replaced
         required: true
       responses:
-        "200":
-          description: Judgement updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Judgement"
         "201":
           description: Judgement created
-        "405":
-          description: Invalid input
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
+    post:
+      tags:
+        - Monitor
+      summary: Updates a judgement
+      operationId: updateJudgement
+      parameters:
+        - name: id
+          in: path
+          description: Judgement ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Judgement"
+        description: Judgement object that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Judgement updated
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
+        "500":
+          description: Internal error          
     delete:
       tags:
         - Monitor
@@ -478,23 +667,25 @@ paths:
       operationId: deleteJudgement
       parameters:
         - name: id
-          in: query
-          description: Judgement ID to be deleted
+          in: path
+          description: Judgement ID
           required: true
           schema:
             type: string
       responses:
         "204":
           description: Judgement deleted
-        "405":
-          description: "Invalid input: Judgement ID does not exists"
+        "400": 
+          description: "Bad request"
+        "404":
+          description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-robot-status/list:
+  /sciroc-robot-status:
     get:
       tags:
         - Monitor
-      summary: List of robots status, optionally filtered by episode or team
+      summary: List of robots status
       parameters:
         - name: query
           in: query
@@ -511,11 +702,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/RobotStatus"
-        "405":
-          description: "Invalid input: episode/team does not exists"
+        "400":
+          description: Bad request
         "500":
           description: Internal error
-  /sciroc-robot-status:
+  /sciroc-robot-status/{id}:
     get:
       tags:
         - Monitor
@@ -523,8 +714,8 @@ paths:
       operationId: getRobotStatus
       parameters:
         - name: id
-          in: query
-          description: RobotStatus ID to be retrieved
+          in: path
+          description: RobotStatus ID to be retrieved (e.g. teamId-robotId-timestamp)
           required: true
           schema:
             type: string
@@ -535,6 +726,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RobotStatus"
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal error
+    put:
+      tags:
+        - Monitor
+        - Episode3
+        - Episode4
+        - Episode7
+        - Episode10
+        - Episode12
+      summary: Adds a status info
+      operationId: createReplaceStatus
+      parameters:
+        - name: id
+          in: path
+          description: RobotStatus ID to be retrieved (e.g. teamId-robotId-timestamp)
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotStatus"
+        description: Status object that needs to be created
+        required: true
+      responses:
+        "204":
+          description: Status replaced
+        "201":
+          description: Status created
+        "405":
+          description: Invalid input
         "500":
           description: Internal error
     post:
@@ -546,7 +774,14 @@ paths:
         - Episode10
         - Episode12
       summary: Adds a status info
-      operationId: addStatus
+      operationId: updateStatus
+      parameters:
+        - name: id
+          in: path
+          description: RobotStatus ID to be updated (e.g. teamId-robotId-timestamp)
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -555,16 +790,12 @@ paths:
         description: Status object that needs to be added
         required: true
       responses:
-        "200":
+        "204":
           description: Status updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RobotStatus"
-        "201":
-          description: Status created
-        "405":
-          description: Invalid input
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -574,7 +805,7 @@ paths:
       operationId: deleteRobotStatus
       parameters:
         - name: id
-          in: query
+          in: path
           description: Robot status ID to be deleted
           required: true
           schema:
@@ -582,11 +813,13 @@ paths:
       responses:
         "204":
           description: Robot status deleted
-        "405":
-          description: "Invalid input: Robot status ID does not exists"
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
         "500":
           description: Internal error
-  /sciroc-robot-location/list:
+  /sciroc-robot-location:
     get:
       tags:
         - Monitor
@@ -607,11 +840,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/RobotLocation"
-        "405":
-          description: "Invalid input: episode/team does not exists"
+        "400":
+          description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-robot-location:
+  /sciroc-robot-location/{id}:
     get:
       tags:
         - Monitor
@@ -619,7 +852,7 @@ paths:
       operationId: getRobotLocation
       parameters:
         - name: id
-          in: query
+          in: path
           description: Robot location ID to be retrieved
           required: true
           schema:
@@ -631,6 +864,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RobotLocation"
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal error
+    put:
+      tags:
+        - Monitor
+        - Episode3
+        - Episode4
+        - Episode7
+        - Episode10
+        - Episode12
+      summary: Set robot location
+      operationId: setRobotLocation
+      parameters:
+        - name: id
+          in: path
+          description: Robot location ID to be retrieved
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotLocation"
+        description: Robot Location object that needs to be created/replaced
+        required: true
+      responses:
+        "204":
+          description: Robot Location replaced
+        "201":
+          description: Robot Location created
+        "400":
+          description: Invalid input
         "500":
           description: Internal error
     post:
@@ -642,7 +912,14 @@ paths:
         - Episode10
         - Episode12
       summary: Set robot location
-      operationId: setRobotLocation
+      operationId: updateRobotLocation
+      parameters:
+        - name: id
+          in: path
+          description: Robot location ID to be retrieved
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -651,18 +928,12 @@ paths:
         description: Robot Location object that needs to be added
         required: true
       responses:
-        "200":
+        "204":
           description: Robot Location updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RobotLocation"
-        "201":
-          description: Robot Location created
-        "405":
+        "400":
           description: Invalid input
         "500":
-          description: Internal error
+          description: Internal error          
     delete:
       tags:
         - Monitor
@@ -670,7 +941,7 @@ paths:
       operationId: deleteRobotLocation
       parameters:
         - name: id
-          in: query
+          in: path
           description: Robot location ID to be deleted
           required: true
           schema:
@@ -678,11 +949,13 @@ paths:
       responses:
         "204":
           description: Robot location deleted
-        "405":
+        "400":
+          description: Bad request
+        "404":
           description: "Invalid input: Robot location ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode3-menu/list:
+  /sciroc-episode3-menu:
     get:
       tags:
         - Episode3
@@ -703,11 +976,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Menu"
-        "405":
-          description: "Invalid input: menu does not exists"
+        "400":
+          description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode3-menu:
+  /sciroc-episode3-menu/{id}:
     get:
       tags:
         - Episode3
@@ -715,7 +988,7 @@ paths:
       operationId: getMenu
       parameters:
         - name: id
-          in: query
+          in: path
           description: Menu ID
           required: true
           schema:
@@ -727,27 +1000,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Menu"
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Episode3
       summary: Set menu
       operationId: setMenu
+      parameters:
+        - name: id
+          in: path
+          description: Menu ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Menu"
-        description: Robot Location object that needs to be added
+        description: Robot Location object that needs to be created/replaced
         required: true
       responses:
         "201":
           description: Menu created
         "204":
-          description: Menu updated
-        "405":
+          description: Menu replaced
+        "400":
           description: Invalid input
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode3
+      summary: Update menu
+      operationId: updateMenu
+      parameters:
+        - name: id
+          in: path
+          description: Menu ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Menu"
+        description: Robot Location object that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Menu updated
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -757,7 +1069,7 @@ paths:
       operationId: deleteMenu
       parameters:
         - name: id
-          in: query
+          in: path
           description: Menu ID to be deleted
           required: true
           schema:
@@ -765,11 +1077,13 @@ paths:
       responses:
         "204":
           description: Menu deleted
-        "405":
-          description: "Invalid input: Menu ID does not exists"
+        "404":
+          description: "Not found"
+        "400":
+          description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-episode3-table/list:
+  /sciroc-episode3-table:
     get:
       tags:
         - Episode3
@@ -790,11 +1104,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Table"
-        "405":
+        "400":
           description: Invalid input
         "500":
           description: Internal error
-  /sciroc-episode3-table:
+  /sciroc-episode3-table/{id}:
     get:
       tags:
         - Episode3
@@ -802,7 +1116,7 @@ paths:
       operationId: getTable
       parameters:
         - name: id
-          in: query
+          in: path
           description: Table ID
           required: true
           schema:
@@ -814,27 +1128,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Table"
+        "404":
+          description: Not found
+        "400":
+          description: Bad request
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Episode3
       summary: Set table
       operationId: setTable
+      parameters:
+        - name: id
+          in: path
+          description: Table ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Table"
-        description: Table that needs to be added or updated
+        description: Table that needs to be created or replaced
         required: true
       responses:
         "201":
           description: Table created
         "204":
           description: Table updated
-        "405":
+        "400":
           description: Invalid input
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode3
+      summary: Set table
+      operationId: updateTable
+      parameters:
+        - name: id
+          in: path
+          description: Table ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Table"
+        description: Table that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: Table updated
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -844,7 +1197,7 @@ paths:
       operationId: deleteTable
       parameters:
         - name: id
-          in: query
+          in: path
           description: Table ID to be deleted
           required: true
           schema:
@@ -856,7 +1209,7 @@ paths:
           description: "Invalid input: Table ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode3-order/list:
+  /sciroc-episode3-order:
     get:
       tags:
         - Episode3
@@ -877,11 +1230,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Order"
-        "405":
-          description: "Invalid input: order does not exists"
+        "400":
+          description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode3-order:
+  /sciroc-episode3-order/{id}:
     get:
       tags:
         - Episode3
@@ -889,7 +1242,7 @@ paths:
       operationId: getOrder
       parameters:
         - name: id
-          in: query
+          in: path
           description: Order ID
           required: true
           schema:
@@ -901,27 +1254,64 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Order"
+        "404":
+          description: Not found
+        "500":
+          description: Internal error
+    put:
+      tags:
+        - Episode3
+      summary: Set order
+      operationId: setOrder
+      parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+        description: Order that needs to be created or replaced
+        required: true
+      responses:
+        "201":
+          description: Menu created
+        "204":
+          description: Menu replaced
+        "400":
+          description: Bad request
         "500":
           description: Internal error
     post:
       tags:
         - Episode3
       summary: Set order
-      operationId: setOrder
+      operationId: updateOrder
+      parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Order"
-        description: Order that needs to be added
+        description: Order that needs to be updated
         required: true
       responses:
-        "201":
-          description: Menu created
         "204":
           description: Menu updated
-        "405":
+        "400":
           description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -931,7 +1321,7 @@ paths:
       operationId: deleteOrder
       parameters:
         - name: id
-          in: query
+          in: path
           description: Order ID to be deleted
           required: true
           schema:
@@ -939,11 +1329,13 @@ paths:
       responses:
         "204":
           description: Order deleted
-        "405":
+        "400":
+          description: Bad request
+        "404":
           description: "Invalid input: Order ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode4-shop/list:
+  /sciroc-episode4-shop:
     get:
       tags:
         - Episode4
@@ -964,11 +1356,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Shop"
-        "405":
-          description: "Invalid input: order does not exists"
+        "400":
+          description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode4-shop:
+  /sciroc-episode4-shop/{id}:
     get:
       tags:
         - Episode4
@@ -976,7 +1368,7 @@ paths:
       operationId: getShop
       parameters:
         - name: id
-          in: query
+          in: path
           description: Shop ID
           required: true
           schema:
@@ -988,13 +1380,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Shop"
+        "404":
+          description: Not found
+        "400":
+          description: Bad request
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Episode4
       summary: Set shop
       operationId: setShop
+      parameters:
+        - name: id
+          in: path
+          description: Shop ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1007,8 +1410,36 @@ paths:
           description: Shop created
         "204":
           description: Shop updated
-        "405":
+        "400":
           description: Invalid input
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode4
+      summary: Set shop
+      operationId: updateShop
+      parameters:
+        - name: id
+          in: path
+          description: Shop ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Shop"
+        description: Shop info that needs to be added
+        required: true
+      responses:
+        "204":
+          description: Shop updated
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -1018,7 +1449,7 @@ paths:
       operationId: deleteShop
       parameters:
         - name: id
-          in: query
+          in: path
           description: Shop ID to be deleted
           required: true
           schema:
@@ -1026,11 +1457,13 @@ paths:
       responses:
         "204":
           description: Shop deleted
-        "405":
-          description: "Invalid input: Shop ID does not exists"
+        "404":
+          description: Not found
+        "400":
+          description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-item/list:
+  /sciroc-episode7-inventory-item:
     get:
       tags:
         - Episode7
@@ -1051,11 +1484,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/InventoryItem"
-        "405":
-          description: "Invalid input: inventory item does not exists"
+        "400":
+          description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-item:
+  /sciroc-episode7-inventory-item/{id}:
     get:
       tags:
         - Episode7
@@ -1063,7 +1496,7 @@ paths:
       operationId: getInventoryItem
       parameters:
         - name: id
-          in: query
+          in: path
           description: InventoryItem ID
           required: true
           schema:
@@ -1075,27 +1508,64 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InventoryItem"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal error
+    put:
+      tags:
+        - Episode7
+      summary: Set shop
+      operationId: setInventoryItem
+      parameters:
+        - name: id
+          in: path
+          description: Inventory Item ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryItem"
+        description: InventoryItem that needs to be created or replaced
+        required: true
+      responses:
+        "201":
+          description: InventoryItem created
+        "204":
+          description: InventoryItem replaced
+        "400":
+          description: Invalid input
         "500":
           description: Internal error
     post:
       tags:
         - Episode7
       summary: Set shop
-      operationId: setInventoryItem
+      operationId: updateInventoryItem
+      parameters:
+        - name: id
+          in: path
+          description: Inventory Item ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/InventoryItem"
-        description: InventoryItem that needs to be added or updated
+        description: InventoryItem that needs to be updated
         required: true
       responses:
-        "201":
-          description: InventoryItem created
         "204":
           description: InventoryItem updated
-        "405":
+        "400":
           description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -1105,19 +1575,21 @@ paths:
       operationId: deleteInventoryItem
       parameters:
         - name: id
-          in: query
-          description: InventoryItem ID to be deleted
+          in: path
+          description: Inventory Item ID
           required: true
           schema:
             type: string
       responses:
         "204":
           description: InventoryItem deleted
-        "405":
-          description: "Invalid input: InventoryItem ID does not exists"
+        "400":
+          description: "Invalid input"
+        "404":
+          description:  Not found
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-order/list:
+  /sciroc-episode7-inventory-order:
     get:
       tags:
         - Episode7
@@ -1138,11 +1610,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/InventoryOrder"
-        "405":
+        "400":
           description: "Invalid query"
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-order:
+  /sciroc-episode7-inventory-order/{id}:
     get:
       tags:
         - Episode7
@@ -1150,7 +1622,7 @@ paths:
       operationId: getInventoryOrder
       parameters:
         - name: id
-          in: query
+          in: path
           description: InventoryOrder ID
           required: true
           schema:
@@ -1162,27 +1634,65 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InventoryOrder"
+        "404": 
+          description: Not found
+        "500":
+          description: Internal error
+    put:
+      tags:
+        - Episode7
+      summary: Set inventory order
+      operationId: setInventoryOrder
+      parameters:
+        - name: id
+          in: path
+          description: Inventory Order ID
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryOrder"
+        description: InventoryOrder that needs to be added or replaced
+        required: true
+      responses:
+        "201":
+          description: InventoryOrder created
+        "204":
+          description: InventoryOrder replaced
+        "400":
+          description: Invalid input
         "500":
           description: Internal error
     post:
       tags:
         - Episode7
       summary: Set inventory order
-      operationId: setInventoryOrder
+      operationId: updateInventoryOrder
+      parameters:
+        - name: id
+          in: path
+          description: Inventory Order ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/InventoryOrder"
-        description: InventoryOrder that needs to be added or updated
+        description: InventoryOrder that needs to be updated
         required: true
       responses:
-        "201":
-          description: InventoryOrder created
         "204":
           description: InventoryOrder updated
-        "405":
+        "400":
           description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -1192,7 +1702,7 @@ paths:
       operationId: deleteInventoryOrder
       parameters:
         - name: id
-          in: query
+          in: path
           description: InventoryOrder ID to be deleted
           required: true
           schema:
@@ -1204,7 +1714,7 @@ paths:
           description: "Invalid input: InventoryOrder ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode12-patient/list:
+  /sciroc-episode12-patient:
     get:
       tags:
         - Episode12
@@ -1225,11 +1735,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Patient"
-        "405":
+        "400":
           description: "Invalid query"
         "500":
           description: Internal error
-  /sciroc-episode12-patient:
+  /sciroc-episode12-patient/{id}:
     get:
       tags:
         - Episode12
@@ -1237,7 +1747,7 @@ paths:
       operationId: getPatient
       parameters:
         - name: id
-          in: query
+          in: path
           description: Patient ID
           required: true
           schema:
@@ -1249,13 +1759,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Patient"
+        "404":
+          description: "Not found"
+        "500":
+          description: Internal error
+    put:
+      tags:
+        - Episode12
+      summary: Set inventory order
+      operationId: setPatient
+      parameters:
+        - name: id
+          in: path
+          description: Patient ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/Patient"
+                - type: object
+                  required:
+                    - "@id"
+        description: InventoryOrder that needs to be created or replaced
+        required: true
+      responses:
+        "201":
+          description: Patient created
+        "204":
+          description: Patient replaced
+        "400":
+          description: Invalid input
         "500":
           description: Internal error
     post:
       tags:
         - Episode12
       summary: Set inventory order
-      operationId: setPatient
+      operationId: updatePatient
+      parameters:
+        - name: id
+          in: path
+          description: Patient ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1264,12 +1815,12 @@ paths:
         description: InventoryOrder that needs to be added or updated
         required: true
       responses:
-        "201":
-          description: Patient created
         "204":
           description: Patient updated
-        "405":
+        "400":
           description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -1279,7 +1830,7 @@ paths:
       operationId: deletePatient
       parameters:
         - name: id
-          in: query
+          in: path
           description: Patient ID to be deleted
           required: true
           schema:
@@ -1287,11 +1838,13 @@ paths:
       responses:
         "204":
           description: Patient deleted
-        "405":
-          description: "Invalid input: Patient ID does not exists"
+        "400":
+          description: "Invalid input"
+        "404":
+          description: Patient ID does not exists
         "500":
           description: Internal error
-  /sciroc-episode12-image/list:
+  /sciroc-episode12-image:
     get:
       tags:
         - Episode12
@@ -1312,11 +1865,11 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/ImageReport"
-        "405":
+        "400":
           description: "Invalid query"
         "500":
           description: Internal error
-  /sciroc-episode12-image:
+  /sciroc-episode12-image/{id}:
     get:
       tags:
         - Episode12
@@ -1324,8 +1877,8 @@ paths:
       operationId: getImageReport
       parameters:
         - name: id
-          in: query
-          description: Patient ID
+          in: path
+          description: Image ID
           required: true
           schema:
             type: string
@@ -1336,13 +1889,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ImageReport"
+        "404":
+          description: Not found
         "500":
           description: Internal error
-    post:
+    put:
       tags:
         - Episode12
       summary: Add image report
       operationId: setImageReport
+      parameters:
+        - name: id
+          in: path
+          description: Image ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1354,9 +1916,37 @@ paths:
         "201":
           description: ImageReport created
         "204":
-          description: ImageReport updated
-        "405":
+          description: ImageReport replaced
+        "400":
           description: Invalid input
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode12
+      summary: Update image report
+      operationId: updateImageReport
+      parameters:
+        - name: id
+          in: path
+          description: Image ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageReport"
+        description: ImageReport that needs to be updated
+        required: true
+      responses:
+        "204":
+          description: ImageReport updated
+        "400":
+          description: Invalid input
+        "404":
+          description: Not found
         "500":
           description: Internal error
     delete:
@@ -1366,7 +1956,7 @@ paths:
       operationId: deleteImageReport
       parameters:
         - name: id
-          in: query
+          in: path
           description: ImageReport ID to be deleted
           required: true
           schema:
@@ -1374,8 +1964,10 @@ paths:
       responses:
         "204":
           description: ImageReport deleted
-        "405":
-          description: "Invalid input: ImageReport ID does not exists"
+        "400":
+          description: "Invalid input"
+        "404":
+          description: Not found
         "500":
           description: Internal error
 externalDocs:
@@ -1488,7 +2080,6 @@ components:
         - episode
         - start-time
         - end-time
-        - score
       properties:
         "@id":
           type: string
@@ -1690,6 +2281,7 @@ components:
         - table
         - products
         - status
+        - timestamp
       properties:
         "@id":
           type: string
@@ -1699,11 +2291,15 @@ components:
             - Order
         table:
           type: string
+        timestamp:
+          type: number
+          description: "Unix timestamp. Millis from epoc."
         products:
           type: array
           minItems: 1
           items:
-            $ref: "#/components/schemas/Product"
+            type: string
+#            $ref: "#/components/schemas/ProductVariant"
         status:
           type: string
           enum:
@@ -1759,6 +2355,7 @@ components:
       - "@id"
       - "@type"
       - items
+      - timestamp
       properties:
         "@id":
           type: string
@@ -1766,6 +2363,9 @@ components:
           type: string
           enum:
           - InventoryOrder
+        timestamp:
+          type: number
+          description:  "Unix timestamp. Millis from epoc."
         items:
           type: array
           minItems: 1
@@ -1831,7 +2431,7 @@ components:
           type: string
         timestamp:
           type: number
-          description: "Unix timestamp"
+          description:  "Unix timestamp. Millis from epoc."
         x:
           type: number
         y:
