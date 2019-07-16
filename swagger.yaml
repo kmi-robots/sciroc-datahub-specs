@@ -41,7 +41,7 @@ tags:
       description: Find out more
       url: http://datahub.mksmart.org
 paths:
-  /sciroc-episode:
+  /{teamid}/sciroc-episode:
     get:
       tags:
         - Monitor
@@ -51,6 +51,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -66,7 +72,7 @@ paths:
           description: Bad request
         "500":
           description: Internal error
-  /sciroc-episode/{id}:
+  /{teamid}/sciroc-episode/{id}:
     get:
       tags:
         - Monitor
@@ -76,6 +82,12 @@ paths:
         - name: id
           in: path
           description: Episode ID to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -101,6 +113,12 @@ paths:
         - name: id
           in: path
           description: Episode ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -132,6 +150,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -160,6 +184,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Episode deleted
@@ -169,7 +199,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-team:
+  /{teamid}/sciroc-team:
     get:
       tags:
         - Monitor
@@ -179,6 +209,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -194,7 +230,7 @@ paths:
           description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-team/{id}:
+  /{teamid}/sciroc-team/{id}:
     get:
       tags:
         - Monitor
@@ -204,6 +240,12 @@ paths:
         - name: id
           in: path
           description: Team ID to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -229,6 +271,12 @@ paths:
         - name: id
           in: path
           description: Team ID to be created
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -260,6 +308,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -286,6 +340,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Team deleted
@@ -295,7 +355,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-event:
+  /{teamid}/sciroc-event:
     get:
       tags:
         - Monitor
@@ -305,6 +365,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -320,7 +386,7 @@ paths:
           description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-event/{id}:
+  /{teamid}/sciroc-event/{id}:
     get:
       tags:
         - Monitor
@@ -330,6 +396,12 @@ paths:
         - name: id
           in: path
           description: Event ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -351,6 +423,12 @@ paths:
         - name: id
           in: path
           description: Event ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -384,6 +462,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -412,6 +496,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Event deleted
@@ -421,7 +511,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-trials:
+  /{teamid}/sciroc-trials:
     get:
       tags:
         - Monitor
@@ -431,6 +521,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -448,7 +544,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-trial/{id}:
+  /{teamid}/sciroc-trial/{id}:
     get:
       tags:
         - Monitor
@@ -458,6 +554,12 @@ paths:
         - name: id
           in: path
           description: Trial ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -483,6 +585,12 @@ paths:
         - name: id
           in: path
           description: Trial ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -514,6 +622,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -542,6 +656,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Trial deleted
@@ -551,7 +671,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-judgement:
+  /{teamid}/sciroc-judgement:
     get:
       tags:
         - Monitor
@@ -561,6 +681,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -578,7 +704,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-judgement/{id}:
+  /{teamid}/sciroc-judgement/{id}:
     get:
       tags:
         - Monitor
@@ -588,6 +714,12 @@ paths:
         - name: id
           in: path
           description: Judgement ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -613,6 +745,12 @@ paths:
         - name: id
           in: path
           description: Judgement ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -644,6 +782,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -672,6 +816,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Judgement deleted
@@ -681,7 +831,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /sciroc-robot-status:
+  /{teamid}/sciroc-robot-status:
     get:
       tags:
         - Monitor
@@ -691,6 +841,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -706,7 +862,7 @@ paths:
           description: Bad request
         "500":
           description: Internal error
-  /sciroc-robot-status/{id}:
+  /{teamid}/sciroc-robot-status/{id}:
     get:
       tags:
         - Monitor
@@ -716,6 +872,12 @@ paths:
         - name: id
           in: path
           description: RobotStatus ID to be retrieved (e.g. teamId-robotId-timestamp)
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -746,6 +908,12 @@ paths:
         - name: id
           in: path
           description: RobotStatus ID to be retrieved (e.g. teamId-robotId-timestamp)
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -782,6 +950,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -810,6 +984,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Robot status deleted
@@ -819,7 +999,7 @@ paths:
           description: Not found
         "500":
           description: Internal error
-  /sciroc-robot-location:
+  /{teamid}/sciroc-robot-location:
     get:
       tags:
         - Monitor
@@ -829,6 +1009,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -844,7 +1030,7 @@ paths:
           description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-robot-location/{id}:
+  /{teamid}/sciroc-robot-location/{id}:
     get:
       tags:
         - Monitor
@@ -854,6 +1040,12 @@ paths:
         - name: id
           in: path
           description: Robot location ID to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -884,6 +1076,12 @@ paths:
         - name: id
           in: path
           description: Robot location ID to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -920,6 +1118,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -946,6 +1150,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Robot location deleted
@@ -955,7 +1165,7 @@ paths:
           description: "Invalid input: Robot location ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode3-menu:
+  /{teamid}/sciroc-episode3-menu:
     get:
       tags:
         - Episode3
@@ -965,6 +1175,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -980,7 +1196,7 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode3-menu/{id}:
+  /{teamid}/sciroc-episode3-menu/{id}:
     get:
       tags:
         - Episode3
@@ -990,6 +1206,12 @@ paths:
         - name: id
           in: path
           description: Menu ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1015,6 +1237,12 @@ paths:
         - name: id
           in: path
           description: Menu ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1046,6 +1274,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1074,6 +1308,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Menu deleted
@@ -1083,7 +1323,7 @@ paths:
           description: "Bad request"
         "500":
           description: Internal error
-  /sciroc-episode3-table:
+  /{teamid}/sciroc-episode3-table:
     get:
       tags:
         - Episode3
@@ -1093,6 +1333,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1108,7 +1354,7 @@ paths:
           description: Invalid input
         "500":
           description: Internal error
-  /sciroc-episode3-table/{id}:
+  /{teamid}/sciroc-episode3-table/{id}:
     get:
       tags:
         - Episode3
@@ -1118,6 +1364,12 @@ paths:
         - name: id
           in: path
           description: Table ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1143,6 +1395,12 @@ paths:
         - name: id
           in: path
           description: Table ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1174,6 +1432,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1202,6 +1466,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Table deleted
@@ -1209,7 +1479,7 @@ paths:
           description: "Invalid input: Table ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode3-order:
+  /{teamid}/sciroc-episode3-order:
     get:
       tags:
         - Episode3
@@ -1219,6 +1489,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1234,7 +1510,7 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode3-order/{id}:
+  /{teamid}/sciroc-episode3-order/{id}:
     get:
       tags:
         - Episode3
@@ -1244,6 +1520,12 @@ paths:
         - name: id
           in: path
           description: Order ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1267,6 +1549,12 @@ paths:
         - name: id
           in: path
           description: Order ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1298,6 +1586,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1326,6 +1620,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Order deleted
@@ -1335,7 +1635,7 @@ paths:
           description: "Invalid input: Order ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode4-shop:
+  /{teamid}/sciroc-episode4-shop:
     get:
       tags:
         - Episode4
@@ -1345,6 +1645,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1360,7 +1666,7 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode4-shop/{id}:
+  /{teamid}/sciroc-episode4-shop/{id}:
     get:
       tags:
         - Episode4
@@ -1370,6 +1676,12 @@ paths:
         - name: id
           in: path
           description: Shop ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1395,6 +1707,12 @@ paths:
         - name: id
           in: path
           description: Shop ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1426,6 +1744,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1454,6 +1778,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Shop deleted
@@ -1463,7 +1793,7 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-item:
+  /{teamid}/sciroc-episode7-inventory-item:
     get:
       tags:
         - Episode7
@@ -1473,6 +1803,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1488,7 +1824,7 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-item/{id}:
+  /{teamid}/sciroc-episode7-inventory-item/{id}:
     get:
       tags:
         - Episode7
@@ -1498,6 +1834,12 @@ paths:
         - name: id
           in: path
           description: InventoryItem ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1521,6 +1863,12 @@ paths:
         - name: id
           in: path
           description: Inventory Item ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1552,6 +1900,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1580,6 +1934,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: InventoryItem deleted
@@ -1589,7 +1949,7 @@ paths:
           description:  Not found
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-order:
+  /{teamid}/sciroc-episode7-inventory-order:
     get:
       tags:
         - Episode7
@@ -1599,6 +1959,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1614,7 +1980,7 @@ paths:
           description: "Invalid query"
         "500":
           description: Internal error
-  /sciroc-episode7-inventory-order/{id}:
+  /{teamid}/sciroc-episode7-inventory-order/{id}:
     get:
       tags:
         - Episode7
@@ -1624,6 +1990,12 @@ paths:
         - name: id
           in: path
           description: InventoryOrder ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1647,6 +2019,12 @@ paths:
         - name: id
           in: path
           description: Inventory Order ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1679,6 +2057,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1707,6 +2091,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: InventoryOrder deleted
@@ -1714,7 +2104,7 @@ paths:
           description: "Invalid input: InventoryOrder ID does not exists"
         "500":
           description: Internal error
-  /sciroc-episode12-patient:
+  /{teamid}/sciroc-episode12-patient:
     get:
       tags:
         - Episode12
@@ -1724,6 +2114,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1739,7 +2135,7 @@ paths:
           description: "Invalid query"
         "500":
           description: Internal error
-  /sciroc-episode12-patient/{id}:
+  /{teamid}/sciroc-episode12-patient/{id}:
     get:
       tags:
         - Episode12
@@ -1749,6 +2145,12 @@ paths:
         - name: id
           in: path
           description: Patient ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1772,6 +2174,12 @@ paths:
         - name: id
           in: path
           description: Patient ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1807,6 +2215,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1835,6 +2249,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       responses:
         "204":
           description: Patient deleted
@@ -1844,7 +2264,7 @@ paths:
           description: Patient ID does not exists
         "500":
           description: Internal error
-  /sciroc-episode12-image:
+  /{teamid}/sciroc-episode12-image:
     get:
       tags:
         - Episode12
@@ -1854,6 +2274,12 @@ paths:
           in: query
           description: Query
           required: false
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
           schema:
             type: string
       responses:
@@ -1869,7 +2295,7 @@ paths:
           description: "Invalid query"
         "500":
           description: Internal error
-  /sciroc-episode12-image/{id}:
+  /{teamid}/sciroc-episode12-image/{id}:
     get:
       tags:
         - Episode12
@@ -1879,6 +2305,12 @@ paths:
         - name: id
           in: path
           description: Image ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1902,6 +2334,12 @@ paths:
         - name: id
           in: path
           description: Image ID
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
@@ -1933,6 +2371,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1958,6 +2402,12 @@ paths:
         - name: id
           in: path
           description: ImageReport ID to be deleted
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
           required: true
           schema:
             type: string
