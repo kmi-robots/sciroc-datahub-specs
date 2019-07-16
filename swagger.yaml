@@ -2424,22 +2424,15 @@ externalDocs:
   description: Find out more about the SciRoc competition
   url: http://sciroc.org/datahub
 servers:
-  - url: https://api.mksmart.org/sciroc-competition/
-  - url: http://api.mksmart.org/sciroc-competition/
+  - url: https://api.pp.mksmart.org/sciroc-competition/
+  - url: http://api.pp.mksmart.org/sciroc-competition/
+security:
+  - scirocAuth: []
 components:
   securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://petstore.swagger.io/oauth/dialog
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    scirocAuth:     
+      type: http
+      scheme: basic
   schemas:
     Team:
       type: object
