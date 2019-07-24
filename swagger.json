@@ -3738,9 +3738,6 @@
   "servers": [
     {
       "url": "https://api.pp.mksmart.org/sciroc-competition/"
-    },
-    {
-      "url": "http://api.pp.mksmart.org/sciroc-competition/"
     }
   ],
   "security": [
@@ -3871,7 +3868,10 @@
           "team",
           "episode",
           "start-time",
-          "end-time"
+          "end-time",
+          "duration",
+          "achievements",
+          "penalties"
         ],
         "properties": {
           "@id": {
@@ -3890,10 +3890,24 @@
             "type": "string"
           },
           "start-time": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Trial start time"
           },
           "end-time": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Trial expected end time"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Actual trial duration in seconds"
+          },
+          "achievements": {
+            "type": "number"
+          },
+          "penalties": {
+            "type": "number"
           },
           "score": {
             "type": "number"
@@ -3941,8 +3955,7 @@
           "timestamp",
           "x",
           "y",
-          "z",
-          "reference"
+          "z"
         ],
         "properties": {
           "@id": {
@@ -3976,12 +3989,6 @@
           },
           "z": {
             "type": "number"
-          },
-          "reference": {
-            "type": "string",
-            "enum": [
-              "map"
-            ]
           }
         }
       },
@@ -3993,8 +4000,7 @@
           "team",
           "episode",
           "timestamp",
-          "location",
-          "reference"
+          "location"
         ],
         "properties": {
           "@id": {
@@ -4024,12 +4030,6 @@
           },
           "z": {
             "type": "number"
-          },
-          "reference": {
-            "type": "string",
-            "enum": [
-              "map"
-            ]
           }
         }
       },
@@ -4143,8 +4143,8 @@
             "type": "string"
           },
           "timestamp": {
-            "type": "number",
-            "description": "Unix timestamp. Millis from epoc."
+            "type": "string",
+            "format": "date-time"
           },
           "products": {
             "type": "array",
@@ -4167,7 +4167,8 @@
         "required": [
           "@id",
           "@type",
-          "floor"
+          "floor",
+          "goal"
         ],
         "properties": {
           "@id": {
@@ -4184,6 +4185,10 @@
           },
           "description": {
             "type": "string"
+          },
+          "goal": {
+            "type": "boolean",
+            "description": "Indicates whether this shop is the current target destination"
           }
         }
       },
@@ -4196,7 +4201,8 @@
           "description",
           "shelf",
           "slot",
-          "quantity"
+          "quantity",
+          "timestamp"
         ],
         "properties": {
           "@id": {
@@ -4222,6 +4228,10 @@
           },
           "quantity": {
             "type": "number"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -4231,7 +4241,8 @@
           "@id",
           "@type",
           "items",
-          "timestamp"
+          "timestamp",
+          "status"
         ],
         "properties": {
           "@id": {
@@ -4253,6 +4264,13 @@
             "items": {
               "$ref": "#/components/schemas/InventoryItemOrder"
             }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Complete"
+            ]
           }
         }
       },
@@ -4278,8 +4296,7 @@
           "@type",
           "x",
           "y",
-          "z",
-          "reference"
+          "z"
         ],
         "properties": {
           "@id": {
@@ -4299,12 +4316,6 @@
           },
           "z": {
             "type": "number"
-          },
-          "reference": {
-            "type": "string",
-            "enum": [
-              "map"
-            ]
           }
         }
       },
@@ -4318,7 +4329,6 @@
           "x",
           "y",
           "z",
-          "reference",
           "base64",
           "format"
         ],
@@ -4336,8 +4346,8 @@
             "type": "string"
           },
           "timestamp": {
-            "type": "number",
-            "description": "Unix timestamp. Millis from epoc."
+            "type": "string",
+            "format": "date-time"
           },
           "x": {
             "type": "number"
@@ -4347,12 +4357,6 @@
           },
           "z": {
             "type": "number"
-          },
-          "reference": {
-            "type": "string",
-            "enum": [
-              "map"
-            ]
           },
           "base64": {
             "type": "string"
