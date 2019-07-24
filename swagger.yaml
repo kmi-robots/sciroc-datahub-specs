@@ -2732,6 +2732,7 @@ components:
       - "@id"
       - "@type"
       - floor
+      - goal
       properties:
         "@id":
           type: string
@@ -2743,6 +2744,9 @@ components:
           type: number
         description:
           type: string
+        goal:
+          type: boolean
+          description: Indicates whether this shop is the current target destination
     InventoryItem:
       type: object
       required:
