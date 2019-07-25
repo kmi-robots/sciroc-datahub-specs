@@ -2794,8 +2794,8 @@ components:
           enum:
           - InventoryOrder
         timestamp:
-          type: number
-          description:  "Unix timestamp. Millis from epoc."
+          type: string
+          format: date-time
         items:
           type: array
           minItems: 1
