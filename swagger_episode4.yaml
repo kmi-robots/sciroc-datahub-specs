@@ -164,12 +164,6 @@ paths:
           required: false
           schema:
             type: string
-        - name: teamid
-          in: path
-          description: Team ID
-          required: true
-          schema:
-            type: string            
       responses:
         "200":
           description: successful operation
@@ -193,12 +187,6 @@ paths:
         - name: id
           in: path
           description: Shop ID
-          required: true
-          schema:
-            type: string
-        - name: teamid
-          in: path
-          description: Team ID
           required: true
           schema:
             type: string
