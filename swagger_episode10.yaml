@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  description: DataHub SciRoc Competition Interface - Episode 10
+  version: 0.1.0
+  title: DataHub SciRoc Competition Interface - Episode 10
+  termsOfService: http://datahub.mksmart.org
+  contact:
+    email: datahub-support@mksmart.org
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: Episode10
+    description: "Episode 10: Open the door"
+    externalDocs:
+      description: Find out more
+      url: http://datahub.mksmart.org
+paths:
+  /{teamid}/sciroc-robot-status/{id}:
+    put:
+      tags:
+        - Episode10
+      summary: Adds a status info
+      operationId: createReplaceStatus
+      parameters:
+        - name: id
+          in: path
+          description: RobotStatus ID to be retrieved (e.g. teamId-robotId-timestamp)
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotStatus"
+        description: Status object that needs to be created
+        required: true
+      responses:
+        "204":
+          description: Status replaced
+        "201":
+          description: Status created
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode10
+      summary: Adds a status info
+      operationId: updateStatus
+      parameters:
+        - name: id
+          in: path
+          description: RobotStatus ID to be updated (e.g. teamId-robotId-timestamp)
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotStatus"
+        description: Status object that needs to be added
+        required: true
+      responses:
+        "204":
+          description: Status updated
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal error
+  /{teamid}/sciroc-robot-location/{id}:
+    put:
+      tags:
+        - Episode10
+      summary: Set robot location
+      operationId: setRobotLocation
+      parameters:
+        - name: id
+          in: path
+          description: Robot location ID to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotLocation"
+        description: Robot Location object that needs to be created/replaced
+        required: true
+      responses:
+        "204":
+          description: Robot Location replaced
+        "201":
+          description: Robot Location created
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal error
+    post:
+      tags:
+        - Episode10
+      summary: Set robot location
+      operationId: updateRobotLocation
+      parameters:
+        - name: id
+          in: path
+          description: Robot location ID to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: teamid
+          in: path
+          description: Team ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RobotLocation"
+        description: Robot Location object that needs to be added
+        required: true
+      responses:
+        "204":
+          description: Robot Location updated
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal error          
+externalDocs:
+  description: Find out more about the SciRoc competition
+  url: http://sciroc.org/datahub
+servers:
+  - url: https://api.pp.mksmart.org/sciroc-competition/
+security:
+  - scirocAuth: []
+components:
+  securitySchemes:
+    scirocAuth:     
+      type: http
+      scheme: basic
+  schemas:
+    RobotStatus:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - message
+        - team
+        - episode
+        - timestamp
+        - x
+        - y
+        - z
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - RobotStatus
+        message:
+          type: string
+          maxLength: 30
+        episode:
+          type: string
+        team:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
+    RobotLocation:
+      type: object
+      required:
+        - "@id"
+        - "@type"
+        - team
+        - episode
+        - timestamp
+        - location
+      properties:
+        "@id":
+          type: string
+        "@type":
+          type: string
+          enum:
+            - RobotLocation
+        episode:
+          type: string
+        team:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        x:
+          type: number
+        y:
+          type: number
+        z:
+          type: number
