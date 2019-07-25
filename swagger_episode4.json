@@ -233,7 +233,7 @@
         }
       }
     },
-    "/{teamid}/sciroc-episode4-shop": {
+    "/master/sciroc-episode4-shop": {
       "get": {
         "tags": [
           "Episode4"
@@ -245,15 +245,6 @@
             "in": "query",
             "description": "Query",
             "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamid",
-            "in": "path",
-            "description": "Team ID",
-            "required": true,
             "schema": {
               "type": "string"
             }
@@ -282,7 +273,7 @@
         }
       }
     },
-    "/{teamid}/sciroc-episode4-shop/{id}": {
+    "/master/sciroc-episode4-shop/{id}": {
       "get": {
         "tags": [
           "Episode4"
@@ -294,15 +285,6 @@
             "name": "id",
             "in": "path",
             "description": "Shop ID",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "teamid",
-            "in": "path",
-            "description": "Team ID",
             "required": true,
             "schema": {
               "type": "string"
