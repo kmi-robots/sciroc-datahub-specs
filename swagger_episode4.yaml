@@ -152,7 +152,7 @@ paths:
           description: Invalid input
         "500":
           description: Internal error          
-  /{teamid}/sciroc-episode4-shop:
+  /master/sciroc-episode4-shop:
     get:
       tags:
         - Episode4
@@ -183,7 +183,7 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /{teamid}/sciroc-episode4-shop/{id}:
+  /master/sciroc-episode4-shop/{id}:
     get:
       tags:
         - Episode4
