@@ -4255,8 +4255,8 @@
             ]
           },
           "timestamp": {
-            "type": "number",
-            "description": "Unix timestamp. Millis from epoc."
+            "type": "string",
+            "description": "date-time"
           },
           "items": {
             "type": "array",
