@@ -2613,7 +2613,6 @@ components:
         - team
         - episode
         - timestamp
-        - location
       properties:
         "@id":
           type: string
