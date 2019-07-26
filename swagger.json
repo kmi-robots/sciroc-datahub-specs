@@ -4256,7 +4256,7 @@
           },
           "timestamp": {
             "type": "string",
-            "description": "date-time"
+            "format": "date-time"
           },
           "items": {
             "type": "array",
