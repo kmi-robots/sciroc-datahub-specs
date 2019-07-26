@@ -3999,8 +3999,7 @@
           "@type",
           "team",
           "episode",
-          "timestamp",
-          "location"
+          "timestamp"
         ],
         "properties": {
           "@id": {
