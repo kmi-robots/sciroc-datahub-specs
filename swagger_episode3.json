@@ -24,7 +24,103 @@
     }
   ],
   "paths": {
+    "/{teamid}/sciroc-robot-status": {
+      "get": {
+        "tags": [
+          "Episode3"
+        ],
+        "summary": "Get a list of robot status",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamid",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RobotStatus"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
     "/{teamid}/sciroc-robot-status/{id}": {
+      "get": {
+        "tags": [
+          "Episode3"
+        ],
+        "summary": "Gets an individual robot status",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Robot status ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamid",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RobotStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Episode3"
@@ -130,7 +226,103 @@
         }
       }
     },
+    "/{teamid}/sciroc-robot-location": {
+      "get": {
+        "tags": [
+          "Episode3"
+        ],
+        "summary": "Get robot locations",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamid",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RobotLocation"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
     "/{teamid}/sciroc-robot-location/{id}": {
+      "get": {
+        "tags": [
+          "Episode3"
+        ],
+        "summary": "Gets an individual robot location",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Robot location ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "teamid",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RobotLocation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Episode3"
