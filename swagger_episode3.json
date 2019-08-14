@@ -465,47 +465,6 @@
         }
       }
     },
-    "/master/sciroc-episode3-menu/{id}": {
-      "get": {
-        "tags": [
-          "Episode3"
-        ],
-        "summary": "Gets a menu",
-        "operationId": "getMenu",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Menu ID",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Menu"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          },
-          "404": {
-            "description": "Not found"
-          },
-          "500": {
-            "description": "Internal error"
-          }
-        }
-      }
-    },
     "/{teamid}/sciroc-episode3-table": {
       "get": {
         "tags": [
