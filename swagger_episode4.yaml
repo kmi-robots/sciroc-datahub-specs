@@ -299,32 +299,6 @@ paths:
           description: "Invalid input"
         "500":
           description: Internal error
-  /master/sciroc-episode4-shop/{id}:
-    get:
-      tags:
-        - Episode4
-      summary: Gets a shop info
-      operationId: getShop
-      parameters:
-        - name: id
-          in: path
-          description: Shop ID
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Shop"
-        "404":
-          description: Not found
-        "400":
-          description: Bad request
-        "500":
-          description: Internal error
 externalDocs:
   description: Find out more about the SciRoc competition
   url: http://sciroc.org/datahub
