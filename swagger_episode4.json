@@ -464,47 +464,6 @@
           }
         }
       }
-    },
-    "/master/sciroc-episode4-shop/{id}": {
-      "get": {
-        "tags": [
-          "Episode4"
-        ],
-        "summary": "Gets a shop info",
-        "operationId": "getShop",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Shop ID",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Shop"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "404": {
-            "description": "Not found"
-          },
-          "500": {
-            "description": "Internal error"
-          }
-        }
-      }
     }
   },
   "externalDocs": {
