@@ -3737,7 +3737,7 @@
   },
   "servers": [
     {
-      "url": "https://api.pp.mksmart.org/sciroc-competition/"
+      "url": "https://api.mksmart.org/sciroc-competition/"
     }
   ],
   "security": [
