@@ -516,7 +516,14 @@
             "maxLength": 30
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           },
           "team": {
             "type": "string"
@@ -557,7 +564,14 @@
             ]
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           },
           "team": {
             "type": "string"
