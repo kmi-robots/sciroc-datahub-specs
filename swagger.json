@@ -790,7 +790,7 @@
         }
       }
     },
-    "/{teamid}/sciroc-trials": {
+    "/{teamid}/sciroc-trial": {
       "get": {
         "tags": [
           "Monitor"
@@ -3737,7 +3737,7 @@
   },
   "servers": [
     {
-      "url": "https://api.mksmart.org/sciroc-competition/"
+      "url": "https://api.pp.mksmart.org/sciroc-competition/"
     }
   ],
   "security": [
@@ -3856,7 +3856,14 @@
             "format": "date-time"
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           }
         }
       },
@@ -3887,7 +3894,14 @@
             "type": "string"
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           },
           "start-time": {
             "type": "string",
@@ -3937,7 +3951,14 @@
             "type": "string"
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           },
           "score": {
             "type": "number"
@@ -3972,7 +3993,14 @@
             "maxLength": 30
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           },
           "team": {
             "type": "string"
@@ -4012,7 +4040,14 @@
             ]
           },
           "episode": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "EPISODE3",
+              "EPISODE4",
+              "EPISODE7",
+              "EPISODE10",
+              "EPISODE12"
+            ]
           },
           "team": {
             "type": "string"
