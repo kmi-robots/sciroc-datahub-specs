@@ -489,6 +489,12 @@ components:
           maxLength: 30
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
         team:
           type: string
         timestamp:
@@ -518,6 +524,12 @@ components:
             - RobotLocation
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
         team:
           type: string
         timestamp:
