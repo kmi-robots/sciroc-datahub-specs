@@ -511,7 +511,7 @@ paths:
           description: "Object not found"
         "500":
           description: Internal error
-  /{teamid}/sciroc-trials:
+  /{teamid}/sciroc-trial:
     get:
       tags:
         - Monitor
@@ -2509,6 +2509,12 @@ components:
           format: date-time
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
     Trial:
       type: object
       required:
@@ -2532,6 +2538,12 @@ components:
           type: string
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
         start-time:
           type: string
           format: date-time
@@ -2568,6 +2580,12 @@ components:
           type: string
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
         score:
           type: number
     RobotStatus:
@@ -2594,6 +2612,12 @@ components:
           maxLength: 30
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
         team:
           type: string
         timestamp:
@@ -2622,6 +2646,12 @@ components:
             - RobotLocation
         episode:
           type: string
+          enum:
+          - EPISODE3
+          - EPISODE4
+          - EPISODE7
+          - EPISODE10
+          - EPISODE12
         team:
           type: string
         timestamp:
