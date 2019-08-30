@@ -1,0 +1,660 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://datahub.mksmart.org/schemas/SciRoc.json",
+  "definitions": {
+    "Team": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "label"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Team"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Episode": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "label",
+        "status"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Episode"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "default": "inactive",
+          "enum": [
+            "inactive",
+            "active"
+          ]
+        }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "label",
+        "start-time",
+        "end-time"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Event"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string",
+          "enum": [
+            "location1",
+            "location2",
+            "location3",
+            "location4",
+            "location5"
+          ]
+        },
+        "start-time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end-time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "episode": {
+          "type": "string",
+          "enum": [
+            "EPISODE3",
+            "EPISODE4",
+            "EPISODE7",
+            "EPISODE10",
+            "EPISODE12"
+          ]
+        }
+      }
+    },
+    "Trial": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "team",
+        "episode",
+        "start-time",
+        "end-time",
+        "duration",
+        "achievements",
+        "penalties"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Trial"
+          ]
+        },
+        "team": {
+          "type": "string"
+        },
+        "episode": {
+          "type": "string",
+          "enum": [
+            "EPISODE3",
+            "EPISODE4",
+            "EPISODE7",
+            "EPISODE10",
+            "EPISODE12"
+          ]
+        },
+        "start-time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Trial start time"
+        },
+        "end-time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Trial expected end time"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Actual trial duration in seconds"
+        },
+        "achievements": {
+          "type": "number"
+        },
+        "penalties": {
+          "type": "number"
+        },
+        "score": {
+          "type": "number"
+        }
+      }
+    },
+    "Judgement": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "team",
+        "episode",
+        "score"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Judgement"
+          ]
+        },
+        "team": {
+          "type": "string"
+        },
+        "episode": {
+          "type": "string",
+          "enum": [
+            "EPISODE3",
+            "EPISODE4",
+            "EPISODE7",
+            "EPISODE10",
+            "EPISODE12"
+          ]
+        },
+        "score": {
+          "type": "number"
+        }
+      }
+    },
+    "RobotStatus": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "message",
+        "team",
+        "episode",
+        "timestamp",
+        "x",
+        "y",
+        "z"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "RobotStatus"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "episode": {
+          "type": "string",
+          "enum": [
+            "EPISODE3",
+            "EPISODE4",
+            "EPISODE7",
+            "EPISODE10",
+            "EPISODE12"
+          ]
+        },
+        "team": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      }
+    },
+    "RobotLocation": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "team",
+        "episode",
+        "timestamp"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "RobotLocation"
+          ]
+        },
+        "episode": {
+          "type": "string",
+          "enum": [
+            "EPISODE3",
+            "EPISODE4",
+            "EPISODE7",
+            "EPISODE10",
+            "EPISODE12"
+          ]
+        },
+        "team": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      }
+    },
+    "Menu": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Menu"
+          ]
+        },
+        "products": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        }
+      }
+    },
+    "Table": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "customers",
+        "status"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Table"
+          ]
+        },
+        "customers": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Needs serving",
+            "Already served",
+            "Needs cleaning",
+            "Ready"
+          ]
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "label",
+        "price"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Product"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "descriptions": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "table",
+        "products",
+        "status",
+        "timestamp"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Order"
+          ]
+        },
+        "table": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "products": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Complete"
+          ]
+        }
+      }
+    },
+    "Shop": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "floor",
+        "goal"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Shop"
+          ]
+        },
+        "floor": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "boolean",
+          "description": "Indicates whether this shop is the current target destination"
+        }
+      }
+    },
+    "InventoryItem": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "label",
+        "description",
+        "shelf",
+        "slot",
+        "quantity",
+        "timestamp"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "InventoryItem"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "shelf": {
+          "type": "string"
+        },
+        "slot": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "InventoryOrder": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "items",
+        "timestamp",
+        "status"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "InventoryOrder"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/InventoryItemOrder"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Complete"
+          ]
+        }
+      }
+    },
+    "InventoryItemOrder": {
+      "type": "object",
+      "required": [
+        "inventory-item-id",
+        "quantity"
+      ],
+      "properties": {
+        "inventory-item-id": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number"
+        }
+      }
+    },
+    "Patient": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "x",
+        "y",
+        "z"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "Patient"
+          ]
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      }
+    },
+    "ImageReport": {
+      "type": "object",
+      "required": [
+        "@id",
+        "@type",
+        "team",
+        "timestamp",
+        "x",
+        "y",
+        "z",
+        "base64",
+        "format"
+      ],
+      "properties": {
+        "@id": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string",
+          "enum": [
+            "ImageReport"
+          ]
+        },
+        "team": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        },
+        "base64": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/png",
+            "image/bmp"
+          ]
+        }
+      }
+    }
+  }
+}
+
+
