@@ -599,5 +599,3 @@ components:
           enum:
           - image/jpeg
           - image/png
-          - image/bmp
-      
