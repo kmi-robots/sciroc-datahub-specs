@@ -649,8 +649,7 @@
           "type": "string",
           "enum": [
             "image/jpeg",
-            "image/png",
-            "image/bmp"
+            "image/png"
           ]
         }
       }
