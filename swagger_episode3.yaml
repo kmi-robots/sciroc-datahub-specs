@@ -740,6 +740,7 @@ components:
             - Already served
             - Needs cleaning
             - Ready
+            - Unknown
     Product:
       type: object
       required:
